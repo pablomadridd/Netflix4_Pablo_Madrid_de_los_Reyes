@@ -1,31 +1,47 @@
-
-/**
- * Navigation.js
- * Este archivo gestiona la navegación entre las secciones de la aplicación.
- */
-
 document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('nav a');
-    const sections = document.querySelectorAll('section');
+    // Inicialización de SwiperJS
+    const swiper = new Swiper('.swiper', {
+        slidesPerView: 1,
+        spaceBetween: 10,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+        },
+        keyboard: {
+            enabled: true,
+        },
+    });
 
+    // Manejo de navegación a través del menú
+    const links = document.querySelectorAll('nav a');
     links.forEach(link => {
         link.addEventListener('click', (event) => {
             event.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-
-            sections.forEach(section => {
-                section.style.display = section.id === targetId ? 'block' : 'none';
-            });
-
-            if (targetId === 'movies') {
-                // Inicializa la vista principal de Movies
-                indexContr();
-            }
+            const slideIndex = parseInt(event.target.dataset.slide, 10);
+            swiper.slideTo(slideIndex);
         });
     });
 
-    // Inicialización: Mostrar solo la primera sección
-    sections.forEach((section, index) => {
-        section.style.display = index === 0 ? 'block' : 'none';
+    // Evento para inicializar la lógica al cambiar de sección
+    swiper.on('slideChange', () => {
+        const activeIndex = swiper.activeIndex;
+
+        // Lógica adicional para cada sección
+        const activeSlide = document.querySelectorAll('.swiper-slide')[activeIndex];
+        const sectionId = activeSlide.querySelector('section')?.id;
+
+        if (sectionId === 'movies') {
+            // Inicializa la vista principal de Movies
+            indexContr();
+        }
+    });
+
+    // Opcional: Mostrar en consola la sección activa
+    swiper.on('slideChangeTransitionEnd', () => {
+        console.log(`Sección activa: ${swiper.activeIndex}`);
     });
 });

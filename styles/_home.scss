@@ -1,0 +1,28 @@
+.home-section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    animation: backgroundFade 12s infinite;
+  
+    .netflix-logo {
+      width: 100%;
+      max-width: 500px;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+  
+    @keyframes backgroundFade {
+      0%, 100% {
+        background-color: black;
+      }
+      50% {
+        background-color: #e50914;
+      }
+    }
+  }
+  
+
+  

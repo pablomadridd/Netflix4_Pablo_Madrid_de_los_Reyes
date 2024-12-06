@@ -1,0 +1,41 @@
+#movies {
+    h1 {
+      font-size: 2rem;
+      color: $primary-color;
+      text-align: center;
+      margin: 20px 0;
+    }
+  
+    #main {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+  
+      .movie {
+        display: inline-block;
+        width: 200px;
+        padding: 10px;
+        box-shadow: 2px 2px 7px #ccc;
+        text-align: center;
+  
+        img {
+          width: 100%;
+          height: auto;
+        }
+  
+        .title {
+          font-size: 1rem;
+          margin: 10px 0;
+        }
+  
+        .actions {
+          button {
+            font-size: 0.9rem;
+            margin: 5px 0;
+          }
+        }
+      }
+    }
+  }
+  

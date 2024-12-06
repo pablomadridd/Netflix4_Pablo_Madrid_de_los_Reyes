@@ -1,15 +1,11 @@
-styles/
-├── style.scss
-├── _variables.scss
-├── _home.scss
-├── _movies.scss
-├── _profile.scss
 
 
 @import 'variables';
 @import 'home';
 @import 'movies';
 @import 'profile';
+
+
 
 body {
   font-family: Arial, sans-serif;
@@ -27,7 +23,6 @@ nav {
     color: $text-color;
     margin: 0 15px;
     text-decoration: none;
-
     &:hover {
       text-decoration: underline;
     }

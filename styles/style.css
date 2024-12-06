@@ -1,0 +1,131 @@
+.home-section {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: black;
+  animation: backgroundFade 12s infinite;
+}
+.home-section .netflix-logo {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  margin: 0 auto;
+  display: block;
+}
+@keyframes backgroundFade {
+  0%, 100% {
+    background-color: black;
+  }
+  50% {
+    background-color: #e50914;
+  }
+}
+
+#movies h1 {
+  font-size: 2rem;
+  color: #214511;
+  text-align: center;
+  margin: 20px 0;
+}
+#movies #main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+#movies #main .movie {
+  display: inline-block;
+  width: 200px;
+  padding: 10px;
+  box-shadow: 2px 2px 7px #ccc;
+  text-align: center;
+}
+#movies #main .movie img {
+  width: 100%;
+  height: auto;
+}
+#movies #main .movie .title {
+  font-size: 1rem;
+  margin: 10px 0;
+}
+#movies #main .movie .actions button {
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+#profile h1 {
+  font-size: 2rem;
+  color: #29b6f6;
+  text-align: center;
+  margin: 20px 0;
+}
+#profile p {
+  font-size: 1rem;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  text-align: center;
+}
+nav a {
+  color: white;
+  margin: 0 15px;
+  text-decoration: none;
+}
+nav a:hover {
+  text-decoration: underline;
+}
+
+.swiper {
+  width: 100%;
+  height: 100vh;
+}
+
+.swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .swiper {
+    height: auto;
+  }
+  .movie {
+    width: 150px;
+  }
+  .movie img {
+    height: auto;
+  }
+  .movie .title {
+    font-size: 0.8rem;
+  }
+}
+@media (max-width: 576px) {
+  nav {
+    text-align: left;
+    padding: 5px;
+  }
+  nav a {
+    margin: 0 10px;
+    font-size: 0.8rem;
+  }
+  .home-section .netflix-logo {
+    max-width: 300px;
+  }
+}
+
+/*# sourceMappingURL=style.css.map */

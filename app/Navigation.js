@@ -5,7 +5,7 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    const links = document.querySelectorAll('a');
+    const links = document.querySelectorAll('nav a');
     const sections = document.querySelectorAll('section');
 
     links.forEach(link => {
@@ -16,11 +16,16 @@ document.addEventListener('DOMContentLoaded', () => {
             sections.forEach(section => {
                 section.style.display = section.id === targetId ? 'block' : 'none';
             });
+
+            if (targetId === 'movies') {
+                // Inicializa la vista principal de Movies
+                indexContr();
+            }
         });
     });
-});
 
-// Inicialización: mostrar solo la primera sección.
-document.querySelectorAll('section').forEach((section, index) => {
-    section.style.display = index === 0 ? 'block' : 'none';
+    // Inicialización: Mostrar solo la primera sección
+    sections.forEach((section, index) => {
+        section.style.display = index === 0 ? 'block' : 'none';
+    });
 });

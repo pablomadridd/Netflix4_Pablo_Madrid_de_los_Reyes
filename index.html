@@ -6,6 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Netflix Navigation</title>
     <link rel="stylesheet" href="./styles/style.css">
+    <style>
+        /* Incluimos estilos específicos del antiguo proyecto */
+        body {
+            --primary: #214511;
+            --secondary: #29b6f6;
+        }
+        button {
+            -webkit-font-smoothing: antialiased;
+            display: inline-block;
+            text-decoration: none;
+            margin: 2px;
+            color: var(--primary);
+            background: white;
+            border: 1px solid var(--primary);
+            height: 20px;
+            font-size: 9px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: ease-in 0.2s all;
+            padding: 0 8px;
+        }
+        button:hover {
+            background: var(--primary);
+            color: white;
+        }
+        #main {
+            padding: 10px;
+        }
+        .movie {
+            display: inline-block;
+            width: auto;
+            padding: 10px;
+            box-shadow: 2px 2px 7px #ccc;
+            margin: 5px;
+        }
+        .movie img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -20,7 +60,7 @@
         </section>
         <section id="movies">
             <h1>Movies</h1>
-            <p>Explore our collection of movies.</p>
+            <div id="main"></div> <!-- Vistas dinámicas aquí -->
         </section>
         <section id="profile">
             <h1>Your Profile</h1>
@@ -28,5 +68,6 @@
         </section>
     </main>
     <script src="./app/Navigation.js"></script>
+    <script src="./app/Movies.js"></script> <!-- Funcionalidades del antiguo código -->
 </body>
 </html>

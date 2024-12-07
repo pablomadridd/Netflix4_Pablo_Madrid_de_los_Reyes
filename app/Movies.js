@@ -8,39 +8,38 @@ localStorage.my_movies = localStorage.my_movies || JSON.stringify(initial_movies
 const apiKey = '1cd433a5a1670216a3daa0882ca24975';
 
 const indexView = (movies) => {
-    let i = 0;
-    let view = "";
+    let view = '';
 
-    while (i < movies.length) {
+    movies.forEach((movie, i) => {
         view += `
-            <div class="movie">
+            <div class="movie draggable" data-my-id="${i}">
                 <div class="movie-img">
-                    <img data-my-id="${i}" src="${movies[i].thumbnail}" onerror="this.src='files/noimage.png'"/>
+                    <img data-my-id="${i}" src="${movie.thumbnail}" onerror="this.src='files/noimage.png'" />
                 </div>
-                <div class="title">
-                    ${movies[i].title || "<em>No title</em>"}
-                </div>
+                <div class="title">${movie.title || '<em>No title</em>'}</div>
                 <div class="actions">
                     <button class="edit" data-my-id="${i}">Edit</button>
                     <button class="show" data-my-id="${i}">View</button>
                     <button class="delete" data-my-id="${i}">Delete</button>
                 </div>
-            </div>\n`;
-        i++;
-    }
+            </div>`;
+    });
 
-    view += `<div class="actions">
-                <button class="new">Add Movie</button>
-                <button class="reset">Reset</button>
-                <button class="search-view">Search Movies</button>
-                <button class="my-keywords">My Keywords</button>
-             </div>`;
-    
+    view += `
+        <div class="actions">
+            <button class="new">Add Movie</button>
+            <button class="reset">Reset</button>
+            <button class="search-view">Search Movies</button>
+            <button class="my-keywords">My Keywords</button>
+        </div>`;
 
-    
+    // Actualiza el contenedor principal con las películas generadas
+    document.getElementById('main').innerHTML = view;
 
-    return view;
+    // Llama a setupDraggableItems para configurar drag and drop
+    setupDraggableItems();
 };
+
 
 
 const editView = (i, movie) => {
@@ -70,21 +69,30 @@ const editView = (i, movie) => {
        `;
 }
 
-
 const showView = (movie) => {
+    // Asegúrate de que los géneros están mapeados correctamente
+    const genres = movie.genres ? movie.genres.map(genre => genre.name).join(", ") : "<em>Not available</em>";
+
     return `
-        <h2 style="color: var(--primary); font-size: 24px; margin-bottom: 10px; text-align: left;">${movie.title}</h2>
-        <div style="margin-bottom: 15px; text-align: left;">
-            <strong>Director:</strong> ${movie.director || "<em>No director</em>"}
-        </div>
-        <div class="movie-img" style="max-width: 300px;">
-            <img src="${movie.thumbnail}" onerror="this.src='files/noimage.png'" alt="${movie.title}" style="width: 100%; height: auto; border-radius: 5px;">
-        </div>
-        <div class="actions" style="margin-top: 15px;">
-            <button class="index">Back</button>
+        <div class="movie-details-container">
+            <div class="movie-details-card">
+                <div class="movie-img">
+                    <img src="${movie.thumbnail}" onerror="this.src='files/noimage.png'" alt="${movie.title}" />
+                </div>
+                <div class="movie-info">
+                    <h2>${movie.title}</h2>
+                    <p><strong>Director:</strong> ${movie.director || "<em>Unknown</em>"}</p>
+                    <p><strong>Genres:</strong> ${genres}</p>
+                </div>
+                <div class="actions">
+                    <button class="index">Back</button>
+                </div>
+            </div>
         </div>
     `;
 };
+
+
 
 
 const newView = () => {

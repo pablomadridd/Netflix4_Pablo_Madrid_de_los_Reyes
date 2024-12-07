@@ -1,59 +1,126 @@
+// Fondo con degradado más suave
 #movies {
-    h1 {
-      font-size: 2rem;
-      color: $primary-color;
-      text-align: center;
-      margin: 20px 0;
-    }
-  
-    #main {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-  
-      .movie {
-        display: inline-block;
-        width: 200px;
-        padding: 10px;
-        box-shadow: 2px 2px 7px #ccc;
-        text-align: center;
-  
-        img {
-          width: 100%;
-          height: auto;
+  min-height: 100vh; // Ocupa todo el alto de la ventana visible
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: linear-gradient(135deg, #e50914, #b20710); // Degradado suave de rojo
+  color: white;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: linear-gradient(135deg, #b20710, #e50914); // Cambio sutil al pasar
+  }
+
+  h1 {
+    font-size: 3rem;
+    font-family: 'Montserrat', sans-serif;
+    margin-bottom: 20px;
+    text-align: center;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  #main {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 20px 0;
+    scroll-behavior: smooth;
+    animation: fadeIn 1s ease-out;
+
+    .movie {
+      flex: 0 0 auto;
+      width: 220px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
+      }
+
+      .movie-img img {
+        width: 100%;
+        height: auto;
+        border-bottom: 2px solid #444;
+        transition: transform 0.3s ease;
+      }
+
+      .movie-info {
+        padding: 15px;
+        h2 {
+          font-size: 1.6rem;
+          color: white;
+          font-family: 'Montserrat', sans-serif;
         }
-  
-        .title {
-          font-size: 1rem;
-          margin: 10px 0;
+
+        p {
+          font-size: 1.1rem;
+          color: #ddd;
         }
-  
-        .actions {
-          button {
-            font-size: 0.9rem;
-            margin: 5px 0;
-          }
+      }
+
+      .actions {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        gap: 10px;
+
+        button {
+          font-size: 0.9rem;
+          padding: 8px 12px;
+          background-color: #e50914;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: all 0.3s ease;
         }
+
+        button:hover {
+          background-color: #b20710;
+          transform: scale(1.1);
+        }
+      }
+
+      &:hover .actions {
+        display: flex;
+        flex-direction: column;
       }
     }
   }
-  
-  #favorite-list {
-    list-style: none;
-    padding: 0;
-  
-    li {
-      background: #e50914;
-      color: white;
-      padding: 10px;
-      margin: 5px 0;
-      cursor: grab;
-      border-radius: 5px;
+
+  // Animación de entrada para la sección de películas
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
     }
-  
-    li:active {
-      cursor: grabbing;
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
-  
+
+  // Estilo para dispositivos pequeños
+  @media (max-width: 768px) {
+    #main {
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .movie {
+      width: 100%;
+      max-width: 300px;
+      margin: 0 10px;
+    }
+  }
+}

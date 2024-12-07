@@ -1,58 +1,71 @@
 import interact from 'interactjs';
 
-// Configuración de elementos arrastrables (draggables)
+// Configurar elementos arrastrables
 const setupDraggableItems = () => {
-    interact('.draggable-item').draggable({
-        listeners: {
-            move(event) {
-                const target = event.target;
-                const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-                const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+  interact('.movie').draggable({
+    listeners: {
+      start(event) {
+        console.log('Drag Start:', event.target);
+        event.target.style.opacity = '0.8';
+        event.target.style.transform = 'scale(1.1)';
+      },
+      move(event) {
+        const target = event.target;
+        const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+        const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-                // Mueve el elemento visualmente
-                target.style.transform = `translate(${x}px, ${y}px)`;
-
-                // Almacena las coordenadas en atributos del elemento
-                target.setAttribute('data-x', x);
-                target.setAttribute('data-y', y);
-            },
-        },
-        inertia: true, // Suaviza el movimiento
-    });
+        target.style.transform = `translate(${x}px, ${y}px)`;
+        target.setAttribute('data-x', x);
+        target.setAttribute('data-y', y);
+      },
+      end(event) {
+        console.log('Drag End:', event.target);
+        event.target.style.opacity = '1';
+        event.target.style.transform = 'scale(1)';
+      },
+    },
+  });
 };
 
-// Configuración de la zona de soltado (dropzone)
+// Configurar las zonas donde se puede soltar
 const setupDropzone = () => {
-    interact('#favorite-list').dropzone({
-        accept: '.draggable-item', // Acepta solo elementos con esta clase
-        overlap: 0.5, // Elemento debe estar al 50% dentro del contenedor
-        ondrop(event) {
-            console.log('Dropped:', event.relatedTarget);
-        },
-    });
+  interact('#main').dropzone({
+    accept: '.movie',
+    overlap: 0.5,
+    ondropactivate(event) {
+      console.log('Dropzone Activated');
+      event.target.style.backgroundColor = '#ffcccc'; // Cambia color cuando está activo
+    },
+    ondropdeactivate(event) {
+      console.log('Dropzone Deactivated');
+      event.target.style.backgroundColor = ''; // Restaura el color
+    },
+    ondrop(event) {
+      const droppedItem = event.relatedTarget;
+      const dropTarget = event.target;
+
+      console.log('Item Dropped:', droppedItem);
+
+      dropTarget.appendChild(droppedItem);
+      updateMovieOrder();
+    },
+  });
 };
 
-// Carga las películas favoritas desde el localStorage
-export const loadFavoriteMovies = () => {
-    const favoriteList = document.getElementById('favorite-list');
-    const favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies') || '[]');
+// Función para actualizar el orden en localStorage
+const updateMovieOrder = () => {
+  const movies = Array.from(document.querySelectorAll('.movie')).map((movie, index) => ({
+    id: movie.getAttribute('data-my-id'),
+    title: movie.querySelector('.title').textContent,
+    order: index,
+  }));
 
-    favoriteList.innerHTML = ''; // Limpia la lista antes de cargar
-    favoriteMovies.forEach((movie, index) => {
-        const li = document.createElement('li');
-        li.innerText = movie.title || `Movie ${index + 1}`;
-        li.id = `movie-${index}`;
-        li.classList.add('draggable-item'); // Añade la clase necesaria para interact.js
-        favoriteList.appendChild(li);
-    });
-
-    // Configura *drag and drop* nuevamente después de cargar los elementos
-    setupDraggableItems();
-    setupDropzone();
+  localStorage.setItem('movies', JSON.stringify(movies));
+  console.log('Nuevo orden guardado:', movies);
 };
 
-// Inicializa las configuraciones al cargar la página
+// Inicializa Drag and Drop al cargar la página
 document.addEventListener('DOMContentLoaded', () => {
-    setupDraggableItems();
-    setupDropzone();
+  setupDraggableItems();
+  setupDropzone();
 });

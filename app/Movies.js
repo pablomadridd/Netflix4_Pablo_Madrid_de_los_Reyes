@@ -8,37 +8,44 @@ localStorage.my_movies = localStorage.my_movies || JSON.stringify(initial_movies
 const apiKey = '1cd433a5a1670216a3daa0882ca24975';
 
 const indexView = (movies) => {
-    let view = '';
-
+    let view = `
+    <div class="action-bar">
+        <button class="new">Add Movie</button>
+        <button class="reset">Reset</button>
+        <button class="search-view">Search Movies</button>
+        <button class="my-keywords">My Keywords</button>
+    </div>
+    <div id="main"></div>
+    `;
+  
+    // Renderizar cada película en su contenedor individual
     movies.forEach((movie, i) => {
-        view += `
-            <div class="movie draggable" data-my-id="${i}">
-                <div class="movie-img">
-                    <img data-my-id="${i}" src="${movie.thumbnail}" onerror="this.src='files/noimage.png'" />
-                </div>
-                <div class="title">${movie.title || '<em>No title</em>'}</div>
-                <div class="actions">
-                    <button class="edit" data-my-id="${i}">Edit</button>
-                    <button class="show" data-my-id="${i}">View</button>
-                    <button class="delete" data-my-id="${i}">Delete</button>
-                </div>
-            </div>`;
+      view += `
+        <div class="movie-container" data-my-id="${i}">
+          <div class="movie" data-my-id="${i}">
+            <div class="movie-img">
+              <img data-my-id="${i}" src="${movie.thumbnail}" onerror="this.src='files/noimage.png'" />
+            </div>
+            <div class="title">${movie.title || '<em>No title</em>'}</div>
+            <div class="actions">
+              <button class="edit" data-my-id="${i}">Edit</button>
+              <button class="show" data-my-id="${i}">View</button>
+              <button class="delete" data-my-id="${i}">Delete</button>
+            </div>
+          </div>
+        </div>
+      `;
     });
-
-    view += `
-        <div class="actions">
-            <button class="new">Add Movie</button>
-            <button class="reset">Reset</button>
-            <button class="search-view">Search Movies</button>
-            <button class="my-keywords">My Keywords</button>
-        </div>`;
-
-    // Actualiza el contenedor principal con las películas generadas
+  
+    view += `</div>`;
     document.getElementById('main').innerHTML = view;
-
-    // Llama a setupDraggableItems para configurar drag and drop
+  
+    // Configurar Drag and Drop después de renderizar
     setupDraggableItems();
-};
+  };
+  
+
+  
 
 
 
@@ -213,7 +220,6 @@ const removeKeywordFromList = (keyword) => {
     alert(`Keyword "${keyword}" removed from your list.`);
     myKeywordsView(); 
 };
-
 
 
 

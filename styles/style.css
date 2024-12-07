@@ -29,10 +29,6 @@
   padding: 20px;
   background: linear-gradient(135deg, #e50914, #b20710);
   color: white;
-  transition: background 0.3s ease;
-}
-#movies:hover {
-  background: linear-gradient(135deg, #b20710, #e50914);
 }
 #movies h1 {
   font-size: 3rem;
@@ -41,56 +37,93 @@
   text-align: center;
   text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
 }
+#movies .action-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 20px;
+  margin-bottom: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.3);
+}
+#movies .action-bar button {
+  padding: 12px 18px;
+  font-size: 1rem;
+  font-family: "Montserrat", sans-serif;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+#movies .action-bar button:hover {
+  background-color: #555;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+#movies .action-bar button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 #movies #main {
   display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 20px 0;
-  scroll-behavior: smooth;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center; /* Asegura que el contenido se alinee al centro */
   animation: fadeIn 1s ease-out;
 }
-#movies #main .movie {
-  flex: 0 0 auto;
-  width: 220px;
-  background-color: rgba(255, 255, 255, 0.1);
+#movies #main .movie-container {
+  flex: 0 0 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: white;
   border-radius: 12px;
-  overflow: hidden;
-  position: relative;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  padding: 15px;
+  text-align: center;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: pointer;
+  cursor: grab;
 }
-#movies #main .movie:hover {
+#movies #main .movie-container:hover {
   transform: scale(1.05);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
 }
-#movies #main .movie .movie-img img {
-  width: 100%;
-  height: auto;
-  border-bottom: 2px solid #444;
-  transition: transform 0.3s ease;
-}
-#movies #main .movie .movie-info {
-  padding: 15px;
-}
-#movies #main .movie .movie-info h2 {
-  font-size: 1.6rem;
-  color: white;
-  font-family: "Montserrat", sans-serif;
-}
-#movies #main .movie .movie-info p {
-  font-size: 1.1rem;
-  color: #ddd;
-}
-#movies #main .movie .actions {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+#movies #main .movie-container .movie {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: 10px;
 }
-#movies #main .movie .actions button {
+#movies #main .movie-container .movie .movie-img img {
+  width: 100%;
+  height: auto;
+  border-bottom: 2px solid #ccc;
+  transition: transform 0.3s ease;
+}
+#movies #main .movie-container .movie .title {
+  font-size: 1rem;
+  font-weight: bold;
+  color: black;
+  margin-top: 10px;
+  text-align: center;
+}
+#movies #main .movie-container .actions {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-top: 10px;
+}
+#movies #main .movie-container .actions button {
   font-size: 0.9rem;
   padding: 8px 12px;
   background-color: #e50914;
@@ -100,35 +133,8 @@
   cursor: pointer;
   transition: all 0.3s ease;
 }
-#movies #main .movie .actions button:hover {
+#movies #main .movie-container .actions button:hover {
   background-color: #b20710;
-  transform: scale(1.1);
-}
-#movies #main .movie:hover .actions {
-  display: flex;
-  flex-direction: column;
-}
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-@media (max-width: 768px) {
-  #movies #main {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-  }
-  #movies .movie {
-    width: 100%;
-    max-width: 300px;
-    margin: 0 10px;
-  }
 }
 
 #profile h1 {
@@ -203,6 +209,42 @@ nav a:hover {
   .home-section .netflix-logo {
     max-width: 300px;
   }
+}
+.movie-container {
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  cursor: grab;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.movie-container.dragging {
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.4);
+  transform: scale(1.05);
+  cursor: grabbing;
+}
+
+.active-dropzone {
+  background-color: rgba(0, 0, 0, 0.1); /* Zona activa */
+}
+
+.general-actions {
+  margin-top: 20px;
+  text-align: center;
+}
+.general-actions button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  cursor: pointer;
+}
+.general-actions button:hover {
+  background-color: #555;
 }
 
 /*# sourceMappingURL=style.css.map */

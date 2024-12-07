@@ -45,3 +45,5 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log(`Sección activa: ${swiper.activeIndex}`);
     });
 });
+
+

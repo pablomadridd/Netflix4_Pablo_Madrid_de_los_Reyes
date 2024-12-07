@@ -54,6 +54,22 @@
   margin: 5px 0;
 }
 
+#favorite-list {
+  list-style: none;
+  padding: 0;
+}
+#favorite-list li {
+  background: #e50914;
+  color: white;
+  padding: 10px;
+  margin: 5px 0;
+  cursor: grab;
+  border-radius: 5px;
+}
+#favorite-list li:active {
+  cursor: grabbing;
+}
+
 #profile h1 {
   font-size: 2rem;
   color: #29b6f6;

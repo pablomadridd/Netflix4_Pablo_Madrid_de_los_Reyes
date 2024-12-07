@@ -39,3 +39,21 @@
     }
   }
   
+  #favorite-list {
+    list-style: none;
+    padding: 0;
+  
+    li {
+      background: #e50914;
+      color: white;
+      padding: 10px;
+      margin: 5px 0;
+      cursor: grab;
+      border-radius: 5px;
+    }
+  
+    li:active {
+      cursor: grabbing;
+    }
+  }
+  

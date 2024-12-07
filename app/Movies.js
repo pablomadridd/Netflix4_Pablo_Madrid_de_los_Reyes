@@ -1,6 +1,6 @@
-// Datos iniciales
 
 let initial_movies = [];
+
 
 
 localStorage.my_movies = localStorage.my_movies || JSON.stringify(initial_movies);
@@ -152,6 +152,12 @@ const keywordsView = (movieId) => {
 };
 
 
+const addMovieToFavorites = (movie) => {
+    const favoriteMovies = JSON.parse(localStorage.getItem('favoriteMovies') || '[]');
+    favoriteMovies.push(movie);
+    localStorage.setItem('favoriteMovies', JSON.stringify(favoriteMovies));
+    loadFavoriteMovies(); // Actualiza la vista de favoritos
+};
 
 
 const processKeywords = (keywords) => {
@@ -209,9 +215,9 @@ const removeKeywordFromList = (keyword) => {
 
 // CONTROLLERS 
 const indexContr = () => {
- let my_movies = JSON.parse(localStorage.my_movies);
- document.getElementById('main').innerHTML = indexView(my_movies);
- };
+    let my_movies = JSON.parse(localStorage.my_movies || "[]");
+    document.getElementById('main').innerHTML = indexView(my_movies);
+};
 
 
  const showContr = (i) => {
@@ -457,4 +463,5 @@ document.addEventListener('click', ev => {
     else if (matchEvent(ev, '.remove-keyword')) removeKeywordFromList(ev.target.dataset.keyword);
     else if (matchEvent(ev, '.keywords')) keywordsView(myId(ev));
 });
+
 
